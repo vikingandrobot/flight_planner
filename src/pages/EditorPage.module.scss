@@ -1,7 +1,20 @@
 .editorPage {
-  background-color: #333;
+  background-color: #white;
   width: 100vw;
   height: 100vh;
-  color: white;
-  overflow: auto;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+
+  h1 {
+    padding: 0 15px;
+  }
+
+  .editorMapContainer {
+    flex-grow: 1;
+    .editorMap {
+      width: 100%;
+      height: 100%;
+    }
+  }
 }

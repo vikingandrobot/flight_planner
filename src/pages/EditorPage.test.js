@@ -1,11 +1,11 @@
-import { render, screen } from '@testing-library/react';
+import ShallowRenderer from 'react-test-renderer/shallow';
 
 import EditorPage from './EditorPage';
 
 describe('EditorPage', () => {
   test('should render the editor page', () => {
-    render(<EditorPage />);
-    const linkElement = screen.getByText('Flight Planner');
-    expect(linkElement).toBeInTheDocument();
+    const renderer = new ShallowRenderer();
+
+    expect(renderer.render(<EditorPage />)).toMatchSnapshot();
   })
 })
