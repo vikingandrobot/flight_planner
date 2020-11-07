@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Map should pass down the class name to the container 1`] = `
+<div>
+  <div
+    class="mapContainer test-classname"
+  />
+</div>
+`;
