@@ -8,7 +8,8 @@ import styles from './FlightPlanList.module.scss';
 
 const { Title } = Typography;
 
-function FlightPlan({ item, onClick }) {
+function FlightPlan({ selected, item, onClick }) {
+
   return (
     <List.Item
       key={item.id}
@@ -23,6 +24,7 @@ function FlightPlan({ item, onClick }) {
           View
         </Button>,
       ]}
+      className={selected ? styles.selectedItem : ''}
     >
       <List.Item.Meta
         title={item.title}
@@ -33,6 +35,7 @@ function FlightPlan({ item, onClick }) {
 
 function FlightPlanList({
   className = '',
+  currentId,
   flightPlans = [],
   loading,
   onRowClick,
@@ -56,7 +59,7 @@ function FlightPlanList({
           rowKey="id"
           bordered
           loading={loading}
-          renderItem={item => <FlightPlan key={item.id} item={item} onClick={handleClick} />}
+          renderItem={item => <FlightPlan selected={currentId === item.id} key={item.id} item={item} onClick={handleClick} />}
         />
       </section>
     </section>

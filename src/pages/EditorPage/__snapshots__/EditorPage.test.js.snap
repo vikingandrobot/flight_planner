@@ -4,7 +4,7 @@ exports[`EditorPage should render the editor page 1`] = `
 <div
   className="editorPage"
 >
-  <header
+  <Header
     className="pageHeader"
   >
     <Title
@@ -12,8 +12,8 @@ exports[`EditorPage should render the editor page 1`] = `
     >
       Flight Planner
     </Title>
-  </header>
-  <section
+  </Header>
+  <Layout
     className="editorContent"
   >
     <header
@@ -28,29 +28,34 @@ exports[`EditorPage should render the editor page 1`] = `
         />
       </div>
     </header>
-    <div
-      className="editorMapContainer"
-    >
-      <Map
-        center={
-          Array [
-            731202.0752756175,
-            5863832.126542759,
-          ]
-        }
-        className="editorMap"
-        fitViewToFlightPlan={true}
-        flightPlan={null}
-        onClick={null}
-        zoom={17}
-      />
-      <FlightPlanList
-        className="editorFlightList"
-        flightPlans={Array []}
-        loading={false}
-        onRowClick={[Function]}
-      />
-    </div>
-  </section>
+    <Layout>
+      <Content>
+        <MapMock
+          center={
+            Array [
+              731202.0752756175,
+              5863832.126542759,
+            ]
+          }
+          className="editorMap"
+          fitViewToFlightPlan={true}
+          flightPlan={null}
+          onClick={null}
+          zoom={17}
+        />
+      </Content>
+      <Sider
+        width={250}
+      >
+        <FlightPlanList
+          className="editorFlightList"
+          currentId={null}
+          flightPlans={Array []}
+          loading={false}
+          onRowClick={[Function]}
+        />
+      </Sider>
+    </Layout>
+  </Layout>
 </div>
 `;

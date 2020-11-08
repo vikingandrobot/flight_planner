@@ -1,9 +1,16 @@
+@import '../../styles/colors.scss';
+
 .flightPlanList {
-  color: #333;
-  background-color: #eee;
+  color: $darkTextColor;
+  background-color: $lightBackground;
+  overflow: scroll;
 
   .listContainer {
     margin: 0 10px;
     background-color: white;
+
+    .selectedItem {
+      background-color: $selectedBackgroundLight;
+    }
   }
 }
