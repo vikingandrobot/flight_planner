@@ -129,11 +129,12 @@ function EditorPage() {
         </header>
         <div className={styles.editorMapContainer}>
           <Map
-            className={styles.editorMap}
             center={center}
-            zoom={zoom}
-            onClick={isCreating ? handleDraftClick : null}
+            className={styles.editorMap}
+            fitViewToFlightPlan={!isCreating}
             flightPlan={isCreating ? draftFlightPlan : (selectedFlightPlanId && flightPlans.find(fp => fp.id === selectedFlightPlanId))}
+            onClick={isCreating ? handleDraftClick : null}
+            zoom={zoom}
           />
           <FlightPlanList
             className={styles.editorFlightList}

@@ -19,10 +19,12 @@ function Map({
   center = [0, 0],
   zoom = 1,
   onClick,
+  fitViewToFlightPlan,
   flightPlan = null,
 }) {
   const targetRef = useRef(null);
   const mapRef = useRef(null);
+  const viewRef = useRef(null);
   const flightPlanSourceRef = useRef(new VectorSource());
 
   const hasFlightPlan = !!flightPlan;
@@ -36,9 +38,10 @@ function Map({
   useEffect(() => {
     function createMap() {
       if (targetRef.current) {
+        viewRef.current = new View({ center, zoom });
 
         mapRef.current = new OlMap({
-          view: new View({ center, zoom }),
+          view: viewRef.current,
           layers: [
             new TileLayer({
               source: new OSM(),
@@ -74,6 +77,10 @@ function Map({
         geometry: new LineString(flightPlan.points),
       });
       flightPlanSourceRef.current.addFeature(feature);
+
+      if (fitViewToFlightPlan && viewRef.current) {
+        viewRef.current.fit(feature.getGeometry(), {padding: [100, 100, 100, 100]});
+      }
     }
   }, [hasFlightPlan, JSON.stringify(flightPlan?.points)])
 
@@ -88,6 +95,7 @@ Map.propTypes = {
   // Center of the map
   center: PropTypes.arrayOf(PropTypes.number),
   zoom: PropTypes.number,
+  fitViewToFlightPlan: PropTypes.bool,
   flightPlan: PropTypes.shape({
     points: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
   })
