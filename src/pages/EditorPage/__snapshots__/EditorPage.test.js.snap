@@ -43,6 +43,12 @@ exports[`EditorPage should render the editor page 1`] = `
         onClick={null}
         zoom={17}
       />
+      <FlightPlanList
+        className="editorFlightList"
+        flightPlans={Array []}
+        loading={false}
+        onRowClick={[Function]}
+      />
     </div>
   </section>
 </div>

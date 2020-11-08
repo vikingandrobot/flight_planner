@@ -39,8 +39,14 @@
 
     .editorMapContainer {
       flex-grow: 1;
+      display: flex;
       .editorMap {
-        width: 100%;
+        flex-grow: 1;
+        height: 100%;
+      }
+      .editorFlightList {
+        width: 20%;
+        min-width: 270px;
         height: 100%;
       }
     }
