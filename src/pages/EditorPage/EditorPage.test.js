@@ -1,4 +1,3 @@
-import ShallowRenderer from 'react-test-renderer/shallow';
 import { render, screen, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
@@ -74,10 +73,12 @@ describe('EditorPage', () => {
     });
   });
 
-  test('should render the editor page', () => {
-    const renderer = new ShallowRenderer();
-
-    expect(renderer.render(<EditorPage />)).toMatchSnapshot();
+  test('should render the editor page', async () => {
+    let result;
+    await act(async () => {
+      result = render(<EditorPage />);
+    });
+    expect(result.container).toMatchSnapshot();
   })
 
   describe('Existing Flight Plans', () => {
@@ -143,8 +144,13 @@ describe('EditorPage', () => {
       userEvent.click(screen.getByText('New Flight Plan'));
 
       // Add some points
-      mapLatestProps().onClick([111, 222]);
-      mapLatestProps().onClick([333, 444]);
+      act(() => {
+        mapLatestProps().onClick([111, 222]);
+      });
+
+      act(() => {
+        mapLatestProps().onClick([333, 444]);
+      });
       // Type a title
       userEvent.type(screen.getByRole('textbox'), 'My new title');
 
