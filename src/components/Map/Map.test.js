@@ -8,6 +8,12 @@ import Map from './Map';
 
 jest.mock('ol/Map');
 jest.mock('ol/View');
+jest.mock('ol/layer/Tile');
+jest.mock('ol/layer/Vector');
+jest.mock('ol/Feature');
+jest.mock('ol/geom');
+jest.mock('ol/source/OSM');
+jest.mock('ol/source/Vector');
 
 describe('Map', () => {
 
@@ -22,7 +28,7 @@ describe('Map', () => {
       zoom: 11,
     };
 
-    render(<Map viewOptions={viewOptions} />);
+    render(<Map center={viewOptions.center} zoom={viewOptions.zoom} />);
 
     expect(OlMap.default).toHaveBeenCalledTimes(1);
     expect(OlView.default).toHaveBeenCalledWith(viewOptions);

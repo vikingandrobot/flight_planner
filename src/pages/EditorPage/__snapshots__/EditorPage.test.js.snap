@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EditorPage should render the editor page 1`] = `
+<div
+  className="editorPage"
+>
+  <header
+    className="pageHeader"
+  >
+    <Title
+      level={1}
+    >
+      Flight Planner
+    </Title>
+  </header>
+  <section
+    className="editorContent"
+  >
+    <header
+      className="editorHeader"
+    >
+      <div />
+      <div
+        className="actionsContainer"
+      >
+        <DefaultActions
+          onNew={[Function]}
+        />
+      </div>
+    </header>
+    <div
+      className="editorMapContainer"
+    >
+      <Map
+        center={
+          Array [
+            731202.0752756175,
+            5863832.126542759,
+          ]
+        }
+        className="editorMap"
+        flightPlan={null}
+        onClick={null}
+        zoom={17}
+      />
+    </div>
+  </section>
+</div>
+`;
