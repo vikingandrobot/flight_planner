@@ -39,6 +39,7 @@ exports[`EditorPage should render the editor page 1`] = `
           ]
         }
         className="editorMap"
+        fitViewToFlightPlan={true}
         flightPlan={null}
         onClick={null}
         zoom={17}
