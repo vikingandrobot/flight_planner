@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Input, Typography } from 'antd';
 import { PlusCircleOutlined, CheckCircleOutlined } from '@ant-design/icons';
 import { fromLonLat } from 'ol/proj';
 
+import { get, post } from '../../api/FlightPlansAPI';
 import Map from '../../components/Map/Map';
+import FlightPlanList from '../../components/FlightPlanList/FlightPlanList';
 
 import styles from './EditorPage.module.scss';
 
@@ -48,19 +50,38 @@ function DefaultActions({ onNew }) {
 }
 
 function EditorPage() {
+  const [isLoadingData, setIsLoadingData] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
   const [flightPlans, setFlightPlans] = useState([]);
+  const [selectedFlightPlanId, setSelectedFlightPlanId] = useState(null);
   const [draftFlightPlan, setDraftFlightPlan] = useState(null);
+
+  useEffect(() => {
+    setIsLoadingData(true);
+    get()
+      .then(setFlightPlans)
+      .finally(() => setIsLoadingData(false));
+  }, []);
 
   function handleNew() {
     setIsCreating(true);
+    setSelectedFlightPlanId(null);
     setDraftFlightPlan({ title: null, points: [] });
   }
 
   function handleCreate() {
-    setFlightPlans([...flightPlans, draftFlightPlan]);
-    setDraftFlightPlan(null);
-    setIsCreating(false);
+    setIsLoadingData(true);
+    post(draftFlightPlan)
+      .then(get)
+      .then((plans) => {
+        setDraftFlightPlan(null);
+        setIsCreating(false);
+        setFlightPlans(plans);
+
+      })
+      .finally(() => {
+        setIsLoadingData(false);
+      });
   }
 
   function handleCancel() {
@@ -68,8 +89,11 @@ function EditorPage() {
     setDraftFlightPlan(null);
   }
 
-  function handleTitleChange(e) {
+  function handleSelect({ id }) {
+    setSelectedFlightPlanId(id);
+  }
 
+  function handleTitleChange(e) {
     setDraftFlightPlan(prevDraft => ({ ...prevDraft, title: e.target.value }));
   }
 
@@ -109,7 +133,13 @@ function EditorPage() {
             center={center}
             zoom={zoom}
             onClick={isCreating ? handleDraftClick : null}
-            flightPlan={draftFlightPlan}
+            flightPlan={isCreating ? draftFlightPlan : (selectedFlightPlanId && flightPlans.find(fp => fp.id === selectedFlightPlanId))}
+          />
+          <FlightPlanList
+            className={styles.editorFlightList}
+            flightPlans={flightPlans}
+            loading={isLoadingData}
+            onRowClick={handleSelect}
           />
         </div>
       </section>
