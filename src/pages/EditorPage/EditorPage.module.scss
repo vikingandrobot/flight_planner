@@ -1,18 +1,20 @@
+@import '../../styles/colors.scss';
+
 .editorPage {
-  background-color: #white;
+  background-color: $veryLightBackground;
   width: 100vw;
   height: 100vh;
-  color: #333;
+  color: $darkTextColor;
   display: flex;
   flex-direction: column;
 
   .pageHeader {
-    padding: 0 10px;
-    border-bottom: solid 1px black;
-    background: rgb(25,67,93);
+    padding: 5px 10px;
+    background: $darkBlueBackground;
+    height: auto;
     h1 {
-      color: white;
-      margin-bottom: 5px;
+      color: $veryLightTextColor;
+      margin: 0;
     }
   }
 
@@ -26,6 +28,7 @@
       display: flex;
       position: relative;
       padding: 5px 10px;
+      background-color: $veryLightBackground;
 
       & > div {
         flex-grow: 1;
@@ -37,18 +40,13 @@
       flex-direction: row-reverse;
     }
 
-    .editorMapContainer {
+    .editorMap {
       flex-grow: 1;
-      display: flex;
-      .editorMap {
-        flex-grow: 1;
-        height: 100%;
-      }
-      .editorFlightList {
-        width: 20%;
-        min-width: 270px;
-        height: 100%;
-      }
+      width: 100%;
+      height: 100%;
+    }
+    .editorFlightList {
+      height: 100%;
     }
   }
 }

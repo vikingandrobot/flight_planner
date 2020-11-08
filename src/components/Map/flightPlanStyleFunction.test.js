@@ -1,5 +1,8 @@
 import flightPlanStyleFunction from './flightPlanStyleFunction';
 
+jest.mock('ol/style/Circle');
+jest.mock('ol/geom/Point');
+
 class MockGeometry {
   constructor(coordinates) {
     this.coordinates = coordinates;

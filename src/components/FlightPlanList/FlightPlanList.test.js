@@ -1,26 +1,14 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import matchMediaPolyfill from '../../../testUtils/matchMediaPolyfill';
 import FlightPlanList from './FlightPlanList';
 
 describe('FlightPlanList', () => {
 
   beforeEach(() => {
     // source https://stackoverflow.com/questions/39830580/jest-test-fails-typeerror-window-matchmedia-is-not-a-function
-    Object.defineProperty(window, 'matchMedia', {
-      writable: true,
-      value: jest.fn().mockImplementation(query => ({
-        matches: false,
-        media: query,
-        onchange: null,
-        addListener: jest.fn(), // deprecated
-        removeListener: jest.fn(), // deprecated
-        addEventListener: jest.fn(),
-        removeEventListener: jest.fn(),
-        dispatchEvent: jest.fn(),
-      })),
-    });
+    matchMediaPolyfill();
   })
 
   const plans = [

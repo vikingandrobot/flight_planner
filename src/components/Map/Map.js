@@ -9,6 +9,7 @@ import Feature from 'ol/Feature';
 import LineString from 'ol/geom/LineString';
 import OSM from 'ol/source/OSM';
 import VectorSource from 'ol/source/Vector';
+import ResizeObserver from 'resize-observer-polyfill';
 
 import flightPlanStyleFunction from './flightPlanStyleFunction';
 
@@ -26,6 +27,7 @@ function Map({
   const mapRef = useRef(null);
   const viewRef = useRef(null);
   const flightPlanSourceRef = useRef(new VectorSource());
+  const sizeObserverRef = useRef();
 
   const hasFlightPlan = !!flightPlan;
 
@@ -37,7 +39,7 @@ function Map({
 
   useEffect(() => {
     function createMap() {
-      if (targetRef.current) {
+      if (targetRef.current && !mapRef.current) {
         viewRef.current = new View({ center, zoom });
 
         mapRef.current = new OlMap({
@@ -53,10 +55,23 @@ function Map({
           ],
           target: targetRef.current,
         });
+
+        // Size observer for the map
+        sizeObserverRef.current = new ResizeObserver(() => {
+          mapRef.current.updateSize()
+        });
+        sizeObserverRef.current.observe(targetRef.current);
       }
     }
 
     createMap();
+
+    return () => {
+      // Clean up
+      if (sizeObserverRef.current) {
+        sizeObserverRef.current.disconnect();
+      }
+    }
   }, []);
 
   useEffect(() => {
